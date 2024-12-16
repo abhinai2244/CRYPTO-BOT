@@ -27,7 +27,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "1. /encrypt - Encrypt text using AES \n"
         "2. /hash - Hash text using SHA-1 or MD5\n"
         "3. /help - Get help on how to use the bot\n"
-        "by ABHINAI"
+        "DEVELOPED BY ABHINAI "
     )
     await update.message.reply_text(welcome_message)
 
@@ -79,24 +79,21 @@ async def process_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         await update.message.reply_text(f"🔒 Encrypted Text: {encrypted_text.decode()}\n🔑 Keep this key safe: {key.decode()}")
         context.user_data['mode'] = None
     elif mode == 'hash':
-        if user_input == '1':  # User selects SHA-1
+        if user_input == '1':
             await update.message.reply_text("Please send the text you want to hash using SHA-1.")
             context.user_data['hash_mode'] = 'sha1'
-        elif user_input == '2':  # User selects MD5
+        elif user_input == '2':
             await update.message.reply_text("Please send the text you want to hash using MD5.")
             context.user_data['hash_mode'] = 'md5'
     else:
-        # Handle text hashing based on the mode selected (SHA-1 or MD5)
         hash_mode = context.user_data.get('hash_mode')
         if hash_mode == 'sha1':
             hash_value = hashlib.sha1(user_input.encode()).hexdigest()
             await update.message.reply_text(f"SHA-1 Hash: {hash_value}")
-            context.user_data['hash_mode'] = None  # Reset the state
         elif hash_mode == 'md5':
             hash_value = hashlib.md5(user_input.encode()).hexdigest()
             await update.message.reply_text(f"MD5 Hash: {hash_value}")
-            context.user_data['hash_mode'] = None  # Reset the state
-        context.user_data['mode'] = None  # Reset the mode as well
+        context.user_data['mode'] = None
 
 # Main function to setup the bot
 def main() -> None:
